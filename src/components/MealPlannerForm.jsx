@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { Plus, Minus } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 
-const MealPlannerForm = () => {
+const MealPlannerForm = ({ onGenerate, loading }) => {
   const { t } = useLanguage();
 
   const [ingredients, setIngredients] = useState("");
   const [familySize, setFamilySize] = useState(1);
   const [region, setRegion] = useState("");
 
-  // Quick items from translations
+  // Quick suggestions from translation file
   const quickItems = Object.values(t.mealPlanner?.quickItems || {});
 
   const addQuickItem = (item) => {
@@ -18,11 +18,27 @@ const MealPlannerForm = () => {
     );
   };
 
+  const handleGenerate = () => {
+  console.log("Button clicked");
+
+  // const handleGenerate = () => {
+  //   if (!ingredients.trim() || !region) {
+  //     alert("Please fill all required fields.");
+  //     return;
+  //   }
+
+    onGenerate({
+      ingredients,
+      familySize,
+      region,
+    });
+  };
+
   return (
     <section id="mealPlannerForm" className="w-full bg-white py-20 px-6">
       <div className="max-w-3xl mx-auto bg-green-50 rounded-3xl shadow-xl p-8 md:p-12">
 
-        {/* Main Heading */}
+        {/* Heading */}
         <div className="text-center mb-10">
           <h2 className="text-3xl md:text-4xl font-bold text-green-900">
             {t.mealPlanner.heading}
@@ -39,6 +55,7 @@ const MealPlannerForm = () => {
             <h3 className="text-xl font-semibold text-green-800">
               {t.mealPlanner.ingredientsTitle}
             </h3>
+
             <p className="text-slate-600 text-sm mb-3">
               {t.mealPlanner.ingredientsSubtext}
             </p>
@@ -54,6 +71,7 @@ const MealPlannerForm = () => {
 
               <button
                 type="button"
+                onClick={() => setIngredients("")}
                 className="bg-green-700 hover:bg-orange-600 text-white p-3 rounded-xl transition"
               >
                 <Plus size={20} />
@@ -75,7 +93,7 @@ const MealPlannerForm = () => {
             </div>
           </div>
 
-          {/* Family Size */}
+          {/* Family Size Section */}
           <div>
             <h3 className="text-xl font-semibold text-green-800">
               {t.mealPlanner.familySize}
@@ -130,12 +148,18 @@ const MealPlannerForm = () => {
             </select>
           </div>
 
-          {/* Submit Button */}
+          {/* Generate Button */}
           <button
             type="button"
-            className="mt-6 bg-green-800 hover:bg-orange-600 text-white text-lg font-semibold py-4 rounded-2xl shadow-lg transition-all duration-300 hover:scale-105"
+            onClick={handleGenerate}
+            disabled={loading}
+            className={`mt-6 text-lg font-semibold py-4 rounded-2xl shadow-lg transition-all duration-300 hover:scale-105 ${
+              loading
+                ? "bg-green-400 cursor-not-allowed text-white"
+                : "bg-green-800 hover:bg-orange-600 text-white"
+            }`}
           >
-            {t.mealPlanner.generateButton}
+            {loading ? "Generating..." : t.mealPlanner.generateButton}
           </button>
 
         </div>

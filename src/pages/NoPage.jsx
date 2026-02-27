@@ -1,19 +1,50 @@
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import HeroSection from "../components/HeroSection";
+import MealPlannerForm from "../components/MealPlannerForm";
+import MealPlannerResult from "../components/MealPlannerResult";
+import ScrollToTop from "../components/ScrollToTop";
+import { generateMealPlan } from "../lib/gemini";
 
-function NoPage() {
+const Home = () => {
+  const [mealPlan, setMealPlan] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const handleGenerate = async (formData) => {
+    try {
+      setLoading(true);
+
+      const prompt = `
+Ingredients: ${formData.ingredients}
+Family Size: ${formData.familySize}
+Region: ${formData.region}
+      `;
+
+      const result = await generateMealPlan(prompt);
+
+      setMealPlan(result);
+    } catch (error) {
+      console.error("Meal generation failed:", error);
+      alert("Something went wrong. Check console.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-green-200 text-white">
-      <h1 className="text-6xl font-bold text-black">404</h1>
-      <p className="text-black text-xl mt-4">Page Not Found</p>
+    <div>
+      <ScrollToTop />
+      <HeroSection />
 
-      <Link
-        to="/"
-        className="mt-6 px-6 py-3 bg-amber-500 text-slate-800 text-extrabold rounded-xl hover:bg-orange-500 transition"
-      >
-        Go Back Home
-      </Link>
+      <MealPlannerForm
+        onGenerate={handleGenerate}
+        loading={loading}
+      />
+
+      {mealPlan && (
+        <MealPlannerResult mealPlan={mealPlan} />
+      )}
     </div>
   );
-}
+};
 
-export default NoPage;
+export default Home;
