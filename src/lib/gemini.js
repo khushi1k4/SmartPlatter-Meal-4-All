@@ -239,3 +239,47 @@ Return ONLY valid JSON in this format:
     throw new Error("Failed to generate recipes from scanner.");
   }
 }
+
+export const generateNutrition = async (dishName) => {
+  try {
+    const model = genAI.getGenerativeModel({
+      model: "gemini-2.5-flash",
+    });
+
+    const prompt = `
+Provide nutrition data for the dish below.
+
+Return ONLY valid JSON in this format:
+{
+  "name": "string",
+  "calories": number,
+  "protein": number,
+  "carbs": number,
+  "fats": number,
+  "fiber": number,
+  "sugar": number,
+  "healthSuggestion": "string"
+}
+
+Dish: ${dishName}
+`;
+
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    const text = response.text();
+
+    const cleanText = text.replace(/```json|```/g, "").trim();
+    const jsonMatch = cleanText.match(/\{[\s\S]*\}/);
+
+    if (!jsonMatch) {
+      console.error("Nutrition Response:", cleanText);
+      throw new Error("No valid JSON found");
+    }
+
+    return JSON.parse(jsonMatch[0]);
+
+  } catch (error) {
+    console.error("Nutrition generation failed:", error);
+    throw new Error("Failed to analyze nutrition.");
+  }
+};

@@ -8,10 +8,24 @@ import NavBar from './components/NavBar'
 import Footer from './components/Footer'
 import { Toaster } from "react-hot-toast";
 import NutriScan from './pages/NutriScan';
+import Loader from './pages/Loader';
+import { useState, useEffect } from 'react';
 
 function Layout() {
   const location = useLocation()
   const is404 = location.pathname === '/404' || location.pathname === '*'
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2500); // 2.5 sec loader
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) return <Loader onFinish={() => setLoading(false)} />;
 
   return (
     <>
