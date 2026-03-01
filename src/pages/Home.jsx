@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import HeroSection from "../components/HeroSection";
 import MealPlannerForm from "../components/MealPlannerForm";
 import MealPlannerResult from "../components/MealPlannerResult";
 import ScrollToTop from "../components/ScrollToTop";
 import { generateMealPlan } from "../lib/gemini";
+import toast from "react-hot-toast";
 
 const Home = () => {
   const [mealPlan, setMealPlan] = useState(null);
@@ -11,33 +12,43 @@ const Home = () => {
   const [lastFormData, setLastFormData] = useState(null);
 
   const handleGenerate = async (formData) => {
-  console.log("Button clicked with:", formData);
+    if (!formData) return;
 
-  // Ensure ingredients is an array
-  const ingredientsArray = formData.ingredients
-    ? formData.ingredients.split(",").map(i => i.trim()).filter(Boolean)
-    : [];
+    const ingredientsArray = Array.isArray(formData.ingredients)
+      ? formData.ingredients
+      : formData.ingredients
+        ?.split(",")
+        .map((i) => i.trim())
+        .filter(Boolean) || [];
 
-  setLastFormData(formData);
-  setLoading(true);
-
-  try {
-    const result = await generateMealPlan({
+    const formattedData = {
       ingredients: ingredientsArray,
       familySize: formData.familySize || 1,
-      region: formData.region || ""
-    });
+      region: formData.region || "",
+    };
 
-    setMealPlan(result);
-  } catch (error) {
-    console.error(error);
-  } finally {
-    setLoading(false);
-  }
-};
+    setLastFormData(formattedData);
+    setLoading(true);
+
+    try {
+      const result = await generateMealPlan(formattedData);
+      setMealPlan({ ...result });
+      toast.success("🎉 New meal plan generated successfully!");
+    } catch (error) {
+      console.error("Meal generation failed:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleBack = () => {
     setMealPlan(null);
+  };
+
+  const handleRegenerate = () => {
+    if (!lastFormData) return;
+    console.log("Regenerating with:", lastFormData);
+    handleGenerate(lastFormData);
   };
 
   return (
@@ -57,7 +68,7 @@ const Home = () => {
       {mealPlan && (
         <MealPlannerResult
           data={mealPlan}
-          onRegenerate={() => handleGenerate(lastFormData)}
+          onRegenerate={handleRegenerate}
           onBack={handleBack}
           loading={loading}
         />

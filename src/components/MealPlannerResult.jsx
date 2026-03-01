@@ -1,17 +1,24 @@
 import React from "react";
+import { FaCoffee, FaUtensils, FaMoon } from "react-icons/fa";
 
 const MealPlannerResult = ({ data, onRegenerate, onBack, loading }) => {
   if (!data) return null;
 
   const { mealPlan, nutritionTips } = data;
 
+  const mealIcons = {
+    Breakfast: <FaCoffee className="inline-block mr-2 text-green-700" />,
+    Lunch: <FaUtensils className="inline-block mr-2 text-green-700" />,
+    Dinner: <FaMoon className="inline-block mr-2 text-green-700" />,
+  };
+  
   const renderSection = (title, sectionData) => {
     if (!sectionData) return null;
 
     console.log("MealPlannerResult data:", data);
     return (
       <div className="bg-white shadow-lg p-6 rounded-xl mb-6">
-        <h2 className="text-2xl font-bold mb-4">{title}</h2>
+        <h2 className="text-2xl text-green-800 font-bold mb-4 flex items-center">{mealIcons[title]} {title}</h2>
         <h3 className="text-xl font-semibold">{sectionData.name}</h3>
 
         <h4 className="mt-4 font-semibold">Ingredients:</h4>
@@ -63,7 +70,7 @@ const MealPlannerResult = ({ data, onRegenerate, onBack, loading }) => {
       )}
 
       {/* Buttons */}
-      <div className="flex flex-col sm:flex-row justify-center gap-4 mt-10">
+      <div className="flex flex-col sm:flex-row justify-center gap-4 my-10">
         <button
           onClick={onRegenerate}
           disabled={loading}

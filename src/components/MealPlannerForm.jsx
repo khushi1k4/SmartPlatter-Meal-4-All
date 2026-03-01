@@ -8,6 +8,7 @@ const MealPlannerForm = ({ onGenerate, loading }) => {
   const [ingredients, setIngredients] = useState("");
   const [familySize, setFamilySize] = useState(1);
   const [region, setRegion] = useState("");
+  const [showHint, setShowHint] = useState(false);
 
   // Quick suggestions from translation file
   const quickItems = Object.values(t.mealPlanner?.quickItems || {});
@@ -21,11 +22,13 @@ const MealPlannerForm = ({ onGenerate, loading }) => {
   const handleGenerate = () => {
   console.log("Button clicked");
 
-  // const handleGenerate = () => {
-  //   if (!ingredients.trim() || !region) {
-  //     alert("Please fill all required fields.");
-  //     return;
-  //   }
+  if (!ingredients.trim() || !region) {
+    // Show hint
+    setShowHint(true);
+    return;
+  }
+
+  setShowHint(false); // clear hint if all good
 
     onGenerate({
       ingredients,
@@ -149,18 +152,24 @@ const MealPlannerForm = ({ onGenerate, loading }) => {
           </div>
 
           {/* Generate Button */}
-          <button
-            type="button"
+          <button type="button"
             onClick={handleGenerate}
-            disabled={loading}
+            disabled={loading || !ingredients.trim() || !region}
             className={`mt-6 text-lg font-semibold py-4 rounded-2xl shadow-lg transition-all duration-300 hover:scale-105 ${
-              loading
-                ? "bg-green-400 cursor-not-allowed text-white"
-                : "bg-green-800 hover:bg-orange-600 text-white"
+            loading || !ingredients.trim() || !region
+              ? "bg-green-400 cursor-not-allowed text-white"
+              : "bg-green-800 hover:bg-orange-600 text-white"
             }`}
           >
             {loading ? "Generating..." : t.mealPlanner.generateButton}
           </button>
+
+          {/* Hint for required fields */}
+          {(!ingredients.trim() || !region) && (
+          <p className="text-sm text-red-400 mt-2 text-center">
+            Please enter ingredients and select a region to generate meal plan.
+          </p>
+          )}
 
         </div>
       </div>

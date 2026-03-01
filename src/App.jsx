@@ -6,6 +6,8 @@ import NoPage from './pages/NoPage'
 import Scanner from './pages/Scanner' 
 import NavBar from './components/NavBar'
 import Footer from './components/Footer'
+import { Toaster } from "react-hot-toast";
+import NutriScan from './pages/NutriScan';
 
 function Layout() {
   const location = useLocation()
@@ -13,6 +15,20 @@ function Layout() {
 
   return (
     <>
+      <Toaster
+        position="bottom-right"
+        reverseOrder={false}
+        toastOptions={{
+          duration: 3000,
+          style: {
+            background: "#fff",
+            color: "#166535",
+            padding: "20px 24px",
+            fontSize: "18px",
+            borderRadius: "14px",
+          },
+        }}
+      />
       <NavBar />
       <Outlet />
       {!is404 && <Footer />}
@@ -28,6 +44,7 @@ function App() {
         <Route path='/' element={<Layout />}>
           <Route index element={<Home />} />
           <Route path='scanner' element={<Scanner />} />
+          <Route path='nutri-scan' element={<NutriScan />} />
         </Route>
         <Route path='*' element={<NoPage />} />
       </Routes>

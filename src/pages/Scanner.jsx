@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import GroceryBillScanner from "../components/GroceryBillScanner";
-import { useLanguage } from "../context/LanguageContext";
+import GroceryBillResult from "../components/GroceryBillResult";
+import {
+  analyzeGroceryBillImage,
+  generateMealForScanner,
+} from "../lib/gemini";
+import toast from "react-hot-toast";
 
 const Scanner = () => {
   const [file, setFile] = useState(null);
@@ -8,31 +13,16 @@ const Scanner = () => {
   const [dietPlan, setDietPlan] = useState("");
   const [allergies, setAllergies] = useState("");
 
-  // Handle file validation
-  const handleFileChange = (e) => {
-    const selectedFile = e.target.files[0];
+  const [extractedItems, setExtractedItems] = useState([]);
+  const [totalAmount, setTotalAmount] = useState(null);
+  const [mealPlan, setMealPlan] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-    if (selectedFile) {
-      if (
-        (selectedFile.type === "image/png" ||
-          selectedFile.type === "image/jpeg") &&
-        selectedFile.size <= 10 * 1024 * 1024
-      ) {
-        setFile(selectedFile);
-      } else {
-        alert("Please upload a PNG or JPG file under 10MB.");
-        setFile(null);
-      }
-    }
-  };
-
-  // Check if form is valid
   const isFormValid = file && dietPreference && dietPlan;
 
-  // Dynamic missing fields message
   const getMissingFieldsMessage = () => {
     const missing = [];
-
     if (!file) missing.push("Upload your bill");
     if (!dietPreference) missing.push("Select diet preference");
     if (!dietPlan) missing.push("Select diet plan");
@@ -41,11 +31,54 @@ const Scanner = () => {
     return `To enable analysis: ${missing.join(", ")}.`;
   };
 
-  const handleAnalyze = () => {
+  const handleAnalyze = async () => {
     if (!isFormValid) return;
 
-    console.log("Analyzing...");
-    // AI logic goes here
+    setLoading(true);
+    setError("");
+
+    try {
+      // STEP 1: Analyze Grocery Bill
+      const billResult = await analyzeGroceryBillImage(file);
+      const items = billResult?.items || [];
+
+      if (!items.length) {
+        setError("No items detected in the bill. Please try again.");
+        setLoading(false);
+        return;
+      }
+
+      // STEP 2: Generate Recipes
+      const mealResult = await generateMealForScanner({
+        ingredients: items,
+        dietType: dietPreference,
+        goal: dietPlan,
+        allergies,
+      });
+
+      // SET ALL STATES TOGETHER
+      setExtractedItems(items);
+      setTotalAmount(billResult?.total || null);
+      setMealPlan(mealResult);
+      toast.success("🎉 Bill is analyzed and meal are suggested successfully!");
+
+    } catch (err) {
+      console.error("Error analyzing bill:", err);
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleReset = () => {
+    setFile(null);
+    setDietPreference("");
+    setDietPlan("");
+    setAllergies("");
+    setExtractedItems([]);
+    setTotalAmount(null);
+    setMealPlan(null);
+    setError("");
   };
 
   return (
@@ -63,87 +96,102 @@ const Scanner = () => {
           </p>
         </div>
 
-        {/* Main Card */}
-        <div className="bg-green-50 rounded-3xl shadow-xl p-8 md:p-12 flex flex-col gap-8">
+        {/* FORM - Show only when mealPlan is NOT ready */}
+        {!mealPlan && (
+          <div className="bg-green-50 rounded-3xl shadow-xl p-8 md:p-12 flex flex-col gap-8">
 
-          {/* Upload Section */}
-          <GroceryBillScanner />
+            {/* Upload */}
+            <GroceryBillScanner file={file} setFile={setFile} />
 
-          {/* Diet Preference */}
-          <div>
-            <h3 className="text-xl font-semibold text-green-800 mb-3">
-              Diet Preference *
-            </h3>
+            {/* Diet Preference */}
+            <div>
+              <h3 className="text-xl font-semibold text-green-800 mb-3">
+                Diet Preference *
+              </h3>
+              <select
+                value={dietPreference}
+                onChange={(e) => setDietPreference(e.target.value)}
+                className="w-full border border-green-300 rounded-xl px-4 py-3 bg-white focus:outline-none focus:ring-2 focus:ring-green-500"
+              >
+                <option value="">Select Diet Preference</option>
+                <option>Veg</option>
+                <option>Non Veg</option>
+                <option>Vegan</option>
+                <option>Egg</option>
+              </select>
+            </div>
 
-            <select
-              value={dietPreference}
-              onChange={(e) => setDietPreference(e.target.value)}
-              className="w-full border border-green-300 rounded-xl px-4 py-3 bg-white focus:outline-none focus:ring-2 focus:ring-green-500"
+            {/* Diet Plan */}
+            <div>
+              <h3 className="text-xl font-semibold text-green-800 mb-3">
+                Diet Plan *
+              </h3>
+              <select
+                value={dietPlan}
+                onChange={(e) => setDietPlan(e.target.value)}
+                className="w-full border border-green-300 rounded-xl px-4 py-3 bg-white focus:outline-none focus:ring-2 focus:ring-green-500"
+              >
+                <option value="">Select Diet Plan</option>
+                <option>Weight Loss</option>
+                <option>Muscle Gain</option>
+                <option>Balanced Diet</option>
+              </select>
+            </div>
+
+            {/* Allergies */}
+            <div>
+              <h3 className="text-xl font-semibold text-green-800 mb-3">
+                Allergies to Avoid (Optional)
+              </h3>
+              <input
+                type="text"
+                value={allergies}
+                onChange={(e) => setAllergies(e.target.value)}
+                placeholder="peanuts, dairy (comma separated)"
+                className="w-full border border-green-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-500"
+              />
+            </div>
+
+            {/* Button */}
+            <button
+              type="button"
+              disabled={!isFormValid || loading}
+              onClick={handleAnalyze}
+              className={`mt-4 text-white text-lg font-semibold py-4 rounded-2xl shadow-lg transition-all duration-300
+                ${
+                  isFormValid
+                    ? "bg-green-800 hover:bg-orange-600 hover:scale-105"
+                    : "bg-gray-400 cursor-not-allowed"
+                }`}
             >
-              <option value="">Select Diet Preference</option>
-              <option>Veg</option>
-              <option>Non Veg</option>
-              <option>Vegan</option>
-              <option>Egg</option>
-            </select>
+              {loading ? "Analyzing..." : "Analyze & Get Meal Suggestions"}
+            </button>
+
+            {/* Validation message */}
+            {!isFormValid && (
+              <p className="text-sm text-gray-600 text-center mt-2">
+                {getMissingFieldsMessage()}
+              </p>
+            )}
+
+            {/* Error */}
+            {error && (
+              <p className="text-red-600 text-center font-medium">
+                {error}
+              </p>
+            )}
           </div>
+        )}
 
-          {/* Diet Plan */}
-          <div>
-            <h3 className="text-xl font-semibold text-green-800 mb-3">
-              Diet Plan *
-            </h3>
-
-            <select
-              value={dietPlan}
-              onChange={(e) => setDietPlan(e.target.value)}
-              className="w-full border border-green-300 rounded-xl px-4 py-3 bg-white focus:outline-none focus:ring-2 focus:ring-green-500"
-            >
-              <option value="">Select Diet Plan</option>
-              <option>Weight Loss</option>
-              <option>Muscle Gain</option>
-              <option>Balanced Diet</option>
-            </select>
-          </div>
-
-          {/* Allergies (Optional) */}
-          <div>
-            <h3 className="text-xl font-semibold text-green-800 mb-3">
-              Allergies to Avoid (Optional)
-            </h3>
-
-            <input
-              type="text"
-              value={allergies}
-              onChange={(e) => setAllergies(e.target.value)}
-              placeholder="Enter allergies (comma separated)"
-              className="w-full border border-green-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-500"
-            />
-          </div>
-
-          {/* Analyze Button */}
-          <button
-            type="button"
-            disabled={!isFormValid}
-            onClick={handleAnalyze}
-            className={`mt-4 text-white text-lg font-semibold py-4 rounded-2xl shadow-lg transition-all duration-300
-              ${
-                isFormValid
-                  ? "bg-green-800 hover:bg-orange-600 hover:scale-105"
-                  : "bg-gray-400 cursor-not-allowed"
-              }`}
-          >
-            Analyze & Get Meal Suggestions
-          </button>
-
-          {/* Reason Why Disabled */}
-          {!isFormValid && (
-            <p className="text-sm text-gray-600 text-center mt-2">
-              {getMissingFieldsMessage()}
-            </p>
-          )}
-
-        </div>
+        {/* RESULT - Only show when mealPlan exists */}
+        {mealPlan && (
+          <GroceryBillResult
+            extractedItems={extractedItems}
+            totalAmount={totalAmount}
+            mealPlan={mealPlan}
+            onReset={handleReset}
+          />
+        )}
       </div>
     </section>
   );
