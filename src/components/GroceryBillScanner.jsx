@@ -22,21 +22,21 @@ const GroceryBillScanner = ({ file, setFile }) => {
 
   return (
     <div>
-      <h3 className="text-xl font-semibold text-green-800 mb-4">
+      <h3 className="text-xl md:text-lg font-semibold text-green-800 mb-4 md:mb-3">
         Upload Your Grocery Bill *
       </h3>
 
       <label
         htmlFor="billUpload"
-        className={`w-full h-56 flex flex-col items-center justify-center 
-        bg-white border-2 border-dashed rounded-2xl cursor-pointer 
-        transition-all duration-300
-        ${
+        className={`w-full h-56 md:h-44 flex flex-col items-center justify-center 
+          bg-white border-2 border-dashed rounded-2xl cursor-pointer 
+          transition-all duration-300
+          ${
           file
             ? "border-green-600"
             : "border-green-400 hover:border-orange-500"
-        }`}
-      >
+          }`}
+        >
         {file ? (
           <span className="text-green-700 font-semibold text-lg">
             File Successfully Uploaded! ✅

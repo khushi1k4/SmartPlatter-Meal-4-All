@@ -4,37 +4,37 @@ import heroImage from "../assets/hero-salad.jpg";
 
 const HeroImage = () => {
   return (
-    <div className="hover:scale-105 relative w-full max-w-md mx-auto px-4 sm:px-0">
+    <div className="hover:scale-105 relative w-full max-w-sm md:max-w-md mx-auto px-4 sm:px-0">
 
       {/* Decorative rotated background */}
-      <div className="absolute -inset-4 bg-secondary/40 rounded-[2rem] rotate-3 shadow-lg" />
+      <div className="absolute -inset-3 md:-inset-2 bg-secondary/30 rounded-[2rem] rotate-2 shadow-md" />
 
       {/* Main image container */}
       <div className="relative rounded-2xl sm:rounded-[2.5rem] overflow-hidden shadow-xl">
         <img
           src={heroImage}
           alt="Fresh healthy salad bowl"
-          className="w-full h-[350px] sm:h-[400px] md:h-[450px] object-cover rounded-2xl"
+          className="w-full h-[300px] sm:h-[340px] md:h-[320px] object-cover rounded-2xl"
         />
 
         {/* Floating Badges */}
-        <div className="absolute top-3 left-3 md:top-4 md:left-4 bg-white/90 text-green-700 flex items-center gap-2 text-xs sm:text-sm rounded-xl p-2 animate-float">
-          <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-green-200 flex items-center justify-center flex-shrink-0">
-            <Heart className="w-3 h-3 md:w-4 md:h-4 text-red-500" />
+        <div className="absolute top-3 left-3 bg-white/90 text-green-700 flex items-center gap-2 text-xs rounded-lg p-1.5">
+          <div className="w-6 h-6 rounded-full bg-green-200 flex items-center justify-center">
+            <Heart className="w-3 h-3 text-red-500" />
           </div>
           <div className="text-left">
-            <div className="text-[10px] md:text-xs uppercase tracking-wide">Nutrition</div>
-            <div className="font-semibold text-xs md:text-sm">Balanced</div>
+            <div className="text-[9px] uppercase tracking-wide">Nutrition</div>
+            <div className="font-semibold text-xs">Balanced</div>
           </div>
         </div>
 
-        <div className="absolute bottom-3 right-3 md:bottom-4 md:right-4 bg-white/90 text-green-700 flex items-center gap-2 text-xs sm:text-sm rounded-xl p-2 animate-float animate-delay-200">
-          <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-green-200 flex items-center justify-center flex-shrink-0">
-            <Leaf className="w-3 h-3 md:w-4 md:h-4 text-green-500" />
+        <div className="absolute bottom-3 right-3 bg-white/90 text-green-700 flex items-center gap-2 text-xs rounded-lg p-1.5">
+          <div className="w-6 h-6 rounded-full bg-green-200 flex items-center justify-center">
+            <Leaf className="w-3 h-3 text-green-500" />
           </div>
           <div className="text-left">
-            <div className="font-semibold text-xs md:text-sm">Budget Friendly</div>
-            <div className="text-[10px] md:text-xs text-gray-500">Maximize nutrition</div>
+            <div className="font-semibold text-xs">Budget Friendly</div>
+            <div className="text-[9px] text-gray-500">Maximize nutrition</div>
           </div>
         </div>
       </div>

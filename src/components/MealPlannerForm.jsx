@@ -39,14 +39,14 @@ const MealPlannerForm = ({ onGenerate, loading }) => {
 
   return (
     <section id="mealPlannerForm" className="w-full bg-white py-20 px-6">
-      <div className="max-w-3xl mx-auto bg-green-50 rounded-3xl shadow-xl p-8 md:p-12">
+      <div className="max-w-3xl md:max-w-2xl lg:max-w-xl mx-auto bg-green-50 rounded-3xl shadow-xl p-8 md:p-10">
 
         {/* Heading */}
         <div className="text-center mb-10">
-          <h2 className="text-3xl md:text-4xl font-bold text-green-900">
+          <h2 className="text-3xl md:text-3xl font-bold text-green-900">
             {t.mealPlanner.heading}
           </h2>
-          <p className="text-slate-600 mt-3 text-base md:text-lg">
+          <p className="text-slate-600 mt-3 text-base md:text-sm">
             {t.mealPlanner.subheading}
           </p>
         </div>
@@ -55,7 +55,7 @@ const MealPlannerForm = ({ onGenerate, loading }) => {
 
           {/* Ingredients Section */}
           <div>
-            <h3 className="text-xl font-semibold text-green-800">
+            <h3 className="text-xl md:text-lg font-semibold text-green-800">
               {t.mealPlanner.ingredientsTitle}
             </h3>
 
@@ -69,7 +69,7 @@ const MealPlannerForm = ({ onGenerate, loading }) => {
                 value={ingredients}
                 onChange={(e) => setIngredients(e.target.value)}
                 placeholder={t.mealPlanner.ingredientsPlaceholder}
-                className="flex-1 border border-green-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-500"
+                className="flex-1 border border-green-300 rounded-xl px-4 py-3 md:py-2 text-sm md:text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
               />
 
               <button
@@ -88,7 +88,7 @@ const MealPlannerForm = ({ onGenerate, loading }) => {
                   key={index}
                   type="button"
                   onClick={() => addQuickItem(item)}
-                  className="text-sm px-3 py-1 bg-white border border-green-300 rounded-full hover:bg-green-200 transition"
+                  className="text-sm md:text-xs px-3 py-1 md:px-2 md:py-1 bg-white border border-green-300 rounded-full hover:bg-green-200 transition"
                 >
                   {item}
                 </button>
@@ -98,7 +98,7 @@ const MealPlannerForm = ({ onGenerate, loading }) => {
 
           {/* Family Size Section */}
           <div>
-            <h3 className="text-xl font-semibold text-green-800">
+            <h3 className="text-xl md:text-lg font-semibold text-green-800">
               {t.mealPlanner.familySize}
             </h3>
 
@@ -106,38 +106,38 @@ const MealPlannerForm = ({ onGenerate, loading }) => {
               <button
                 type="button"
                 onClick={() => setFamilySize((prev) => Math.max(1, prev - 1))}
-                className="bg-green-200 p-3 rounded-full hover:bg-green-300 transition"
+                className="bg-green-200 p-1 rounded-full hover:bg-green-300 transition"
               >
-                <Minus size={18} />
+                <Minus size={12} />
               </button>
 
               <input
                 type="number"
                 value={familySize}
                 readOnly
-                className="w-16 text-center text-lg font-semibold bg-white border border-green-300 rounded-xl py-2"
+                className="w-12 text-center text-xl md:text-base bg-white border border-green-300 rounded-xl py-2 md:py-1"
               />
 
               <button
                 type="button"
                 onClick={() => setFamilySize((prev) => prev + 1)}
-                className="bg-green-200 p-3 rounded-full hover:bg-green-300 transition"
+                className="bg-green-200 p-1 rounded-full hover:bg-green-300 transition"
               >
-                <Plus size={18} />
+                <Plus size={12} />
               </button>
             </div>
           </div>
 
           {/* Region Selection */}
           <div>
-            <h3 className="text-xl font-semibold text-green-800">
+            <h3 className="text-xl md:text-lg font-semibold text-green-800">
               {t.mealPlanner.region}
             </h3>
 
             <select
               value={region}
               onChange={(e) => setRegion(e.target.value)}
-              className="w-full mt-3 border border-green-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-500 bg-white"
+              className="w-full mt-3 border border-green-300 rounded-xl px-4 py-3 md:py-2 text-sm md:text-sm focus:outline-none focus:ring-2 focus:ring-green-500 bg-white"
             >
               <option value="">
                 {t.mealPlanner.selectRegion}
@@ -155,7 +155,7 @@ const MealPlannerForm = ({ onGenerate, loading }) => {
           <button type="button"
             onClick={handleGenerate}
             disabled={loading || !ingredients.trim() || !region}
-            className={`mt-6 text-lg font-semibold py-4 rounded-2xl shadow-lg transition-all duration-300 hover:scale-105 ${
+            className={`mt-6 text-lg md:text-base font-semibold py-4 md:py-3 rounded-2xl shadow-lg transition-all duration-300 hover:scale-105 ${
             loading || !ingredients.trim() || !region
               ? "bg-green-400 cursor-not-allowed text-white"
               : "bg-green-800 hover:bg-orange-600 text-white"

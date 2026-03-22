@@ -15,7 +15,7 @@ const HeroSection = () => {
         <div className="flex-1 flex flex-col gap-8 text-center md:text-left">
 
           {/* Headline */}
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight text-green-900">
+          <h1 className="text-2xl sm:text-3xl md:text-3xl lg:text-4xl font-extrabold leading-snug text-green-900">
             {t.hero.title1}{" "}
             <span className="text-orange-600">
               {t.hero.title2}
@@ -23,23 +23,22 @@ const HeroSection = () => {
           </h1>
 
           {/* Paragraph */}
-          <p className="text-slate-700 text-lg sm:text-xl md:text-xl max-w-xl">
+          <p className="text-slate-700 text-base md:text-sm lg:text-base max-w-md mx-auto md:mx-0">
             {t.hero.description}
           </p>
 
           {/* Button */}
-          <a
-            href="#mealPlannerForm"
-            className="flex w-max mx-auto md:mx-0 hover:bg-green-600 bg-green-800 text-white text-lg font-semibold px-8 py-4 rounded-full shadow-lg transition-all duration-300 hover:scale-105"
+          <a href="#mealPlannerForm"
+            className="flex w-max mx-auto md:mx-0 bg-green-800 hover:bg-green-600 text-white text-sm md:text-sm px-6 py-2.5 rounded-full shadow-md transition-all duration-300 hover:scale-105"
           >
             {t.hero.button}
-            <span className="ml-2 mt-1">
+            <span className="ml-2">
               <ArrowRight />
             </span>
           </a>
 
           {/* Feature Highlights */}
-          <div className="flex flex-wrap items-center justify-center md:justify-start gap-6 pt-4 text-sm sm:text-base font-medium text-green-900">
+          <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 pt-2 text-xs md:text-sm font-medium text-green-900">
 
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-lime-600"></span>

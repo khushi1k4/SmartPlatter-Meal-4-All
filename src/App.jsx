@@ -37,8 +37,8 @@ function Layout() {
           style: {
             background: "#fff",
             color: "#166535",
-            padding: "20px 24px",
-            fontSize: "18px",
+            padding: "16px 20px",
+            fontSize: "12px",
             borderRadius: "14px",
           },
         }}

@@ -34,26 +34,26 @@ const NutriScan = () => {
   };
 
   return (
-    <section className="bg-white py-20 px-6">
-      <div className="max-w-3xl mx-auto">
+    <section className="bg-white pt-10 md:pt-8 pb-20 px-6">
+      <div className="max-w-3xl md:max-w-2xl lg:max-w-xl mx-auto">
 
         {/* Heading */}
         <div className="text-center mb-10">
-          <h1 className="text-3xl md:text-4xl font-bold text-black">
+          <h1 className="text-3xl md:text-3xl font-bold text-black">
             NutriScan 🥗
           </h1>
-          <p className="text-gray-600 mt-3">
+          <p className="text-gray-600 mt-3 text-sm md:text-xs">
             Analyze any dish or custom meal to get complete nutrition breakdown.
           </p>
         </div>
 
         {/* Form */}
         {!nutrition && <section>
-            <div className="bg-green-50 rounded-3xl shadow-xl p-8 flex flex-col gap-6">
+            <div className="bg-green-50 rounded-3xl shadow-xl p-8 md:p-6 flex flex-col gap-6 md:gap-5">
 
                 {/* Dish Name */}
                 <div>
-                    <label className="font-semibold text-green-800">
+                    <label className="font-semibold text-green-800 text-base md:text-sm">
                         Dish Name (Comma separated for more one than)
                     </label>
                     <input
@@ -61,7 +61,7 @@ const NutriScan = () => {
                         value={dish}
                         onChange={(e) => setDish(e.target.value)}
                         placeholder="e.g. paneer tikka, rice"
-                        className="w-full border border-green-300 rounded-xl px-4 py-3 mt-2 focus:outline-none focus:ring-2 focus:ring-green-600"
+                        className="w-full border border-green-300 rounded-xl px-4 py-3 md:py-2 text-sm md:text-sm mt-2 focus:outline-none focus:ring-2 focus:ring-green-600"
                     />
                 </div>
 
@@ -72,15 +72,15 @@ const NutriScan = () => {
 
                 {/* Custom Meal */}
                 <div>
-                    <label className="font-semibold text-green-800">
+                    <label className="font-semibold text-green-800 text-base md:text-sm">
                         Add Your Meal (Ingredients)
                     </label>
                     <textarea
                         value={customMeal}
                         onChange={(e) => setCustomMeal(e.target.value)}
-                        placeholder="e.g., 2 eggs, 1 bowl rice, grilled chicken"
+                        placeholder="e.g. 2 eggs, 1 bowl rice, grilled chicken"
                         rows="4"
-                        className="w-full border border-green-300 rounded-xl px-4 py-3 mt-2 focus:outline-none focus:ring-2 focus:ring-green-600"
+                        className="w-full border text-sm border-green-300 rounded-xl px-4 py-3 mt-2 focus:outline-none focus:ring-2 focus:ring-green-600"
                     />
                 </div>
 
@@ -88,7 +88,7 @@ const NutriScan = () => {
                 <button
                     onClick={handleAnalyze}
                     disabled={loading}
-                    className="bg-green-800 hover:bg-orange-600 text-white py-4 rounded-2xl text-lg font-semibold transition-all"
+                    className="bg-green-800 hover:bg-orange-600 text-white py-3 md:py-2 rounded-2xl text-lg md:text-base font-semibold transition-all"
                 >
                     {loading ? "Analyzing..." : "Analyze Nutrition"}
                 </button>

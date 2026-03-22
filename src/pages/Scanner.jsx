@@ -82,15 +82,15 @@ const Scanner = () => {
   };
 
   return (
-    <section className="w-full bg-white py-20 px-6">
-      <div className="max-w-3xl mx-auto">
+    <section className="w-full bg-white pt-10 md:pt-8 pb-20 px-6">
+      <div className="max-w-3xl md:max-w-2xl lg:max-w-xl mx-auto">
 
         {/* Heading */}
         <div className="text-center mb-10">
-          <h2 className="text-3xl md:text-4xl font-bold text-black">
+          <h2 className="text-3xl md:text-3xl font-bold text-black">
             Grocery Bill Scanner
           </h2>
-          <p className="text-gray-600 mt-3 text-base md:text-lg">
+          <p className="text-gray-600 mt-3 text-base md:text-sm">
             Upload a photo of your grocery bill and get personalized meal
             suggestions based on what you bought.
           </p>
@@ -98,20 +98,20 @@ const Scanner = () => {
 
         {/* FORM - Show only when mealPlan is NOT ready */}
         {!mealPlan && (
-          <div className="bg-green-50 rounded-3xl shadow-xl p-8 md:p-12 flex flex-col gap-8">
+          <div className="bg-green-50 rounded-3xl shadow-xl p-8 md:p-8 flex flex-col gap-8 md:gap-6">
 
             {/* Upload */}
             <GroceryBillScanner file={file} setFile={setFile} />
 
             {/* Diet Preference */}
             <div>
-              <h3 className="text-xl font-semibold text-green-800 mb-3">
+              <h3 className="text-xl md:text-lg font-semibold text-green-800 mb-3">
                 Diet Preference *
               </h3>
               <select
                 value={dietPreference}
                 onChange={(e) => setDietPreference(e.target.value)}
-                className="w-full border border-green-300 rounded-xl px-4 py-3 bg-white focus:outline-none focus:ring-2 focus:ring-green-500"
+                className="w-full border border-green-300 rounded-xl px-4 py-3 md:py-2 text-sm md:text-sm bg-white focus:outline-none focus:ring-2 focus:ring-green-500"
               >
                 <option value="">Select Diet Preference</option>
                 <option>Veg</option>
@@ -123,13 +123,13 @@ const Scanner = () => {
 
             {/* Diet Plan */}
             <div>
-              <h3 className="text-xl font-semibold text-green-800 mb-3">
+              <h3 className="text-xl md:text-lg font-semibold text-green-800 mb-3">
                 Diet Plan *
               </h3>
               <select
                 value={dietPlan}
                 onChange={(e) => setDietPlan(e.target.value)}
-                className="w-full border border-green-300 rounded-xl px-4 py-3 bg-white focus:outline-none focus:ring-2 focus:ring-green-500"
+                className="w-full border border-green-300 rounded-xl px-4 py-3 md:py-2 text-sm md:text-sm bg-white focus:outline-none focus:ring-2 focus:ring-green-500"
               >
                 <option value="">Select Diet Plan</option>
                 <option>Weight Loss</option>
@@ -140,7 +140,7 @@ const Scanner = () => {
 
             {/* Allergies */}
             <div>
-              <h3 className="text-xl font-semibold text-green-800 mb-3">
+              <h3 className="text-xl md:text-lg font-semibold text-green-800 mb-3">
                 Allergies to Avoid (Optional)
               </h3>
               <input
@@ -148,7 +148,7 @@ const Scanner = () => {
                 value={allergies}
                 onChange={(e) => setAllergies(e.target.value)}
                 placeholder="peanuts, dairy (comma separated)"
-                className="w-full border border-green-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-500"
+                className="w-full border border-green-300 rounded-xl px-4 py-3 md:py-2 text-sm md:text-sm bg-white focus:outline-none focus:ring-2 focus:ring-green-500"
               />
             </div>
 
@@ -157,7 +157,7 @@ const Scanner = () => {
               type="button"
               disabled={!isFormValid || loading}
               onClick={handleAnalyze}
-              className={`mt-4 text-white text-lg font-semibold py-4 rounded-2xl shadow-lg transition-all duration-300
+              className={`mt-3 text-white text-lg md:text-base font-semibold py-3 md:py-2 rounded-2xl shadow-lg transition-all duration-300
                 ${
                   isFormValid
                     ? "bg-green-800 hover:bg-orange-600 hover:scale-105"
@@ -169,14 +169,14 @@ const Scanner = () => {
 
             {/* Validation message */}
             {!isFormValid && (
-              <p className="text-sm text-gray-600 text-center mt-2">
+              <p className="text-sm md:text-xs text-gray-600 text-center mt-2">
                 {getMissingFieldsMessage()}
               </p>
             )}
 
             {/* Error */}
             {error && (
-              <p className="text-red-600 text-center font-medium">
+              <p className="text-red-600 text-center font-medium text-sm md:text-xs">
                 {error}
               </p>
             )}
