@@ -19,6 +19,7 @@ const Navbar = () => {
     { name: "Home", path: "/" },
     { name: "Bill Scanner", path: "/scanner" },
     { name: "NutriScan", path: "/nutri-scan" },
+    { name: "NutriCalculator", path: "/nutri-calculator" },
   ];
 
   const languages = [

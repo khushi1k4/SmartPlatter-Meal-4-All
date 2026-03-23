@@ -10,6 +10,7 @@ import { Toaster } from "react-hot-toast";
 import NutriScan from './pages/NutriScan';
 import Loader from './pages/Loader';
 import { useState, useEffect } from 'react';
+import NutriCalculator from './pages/NutriCalculator';
 
 function Layout() {
   const location = useLocation()
@@ -59,6 +60,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path='scanner' element={<Scanner />} />
           <Route path='nutri-scan' element={<NutriScan />} />
+          <Route path='nutri-calculator' element={<NutriCalculator />} />
         </Route>
         <Route path='*' element={<NoPage />} />
       </Routes>
