@@ -94,7 +94,7 @@ It Calculates:
 - Fiber
 And provides: Healthy improvement tips
 
-### 4️⃣ NutriCalculator — Personalized nutrition calculations based on age, gender, height, and weight
+### 4️⃣ NutriCalculator — Personalized nutrition calculations
 - Height, weight, age, gender, and activity level of the individual help to determine the nutrient values required for their body.
 
 ## 🌍 Multilingual Interface
