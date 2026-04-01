@@ -1,13 +1,20 @@
 import axios from "axios";
 
+// fallback helps if env variable missing during build
+const BASE_URL =
+  import.meta.env.VITE_API_URL || "https://meal4all-backend.onrender.com";
+
 const API = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: `${BASE_URL}/api`,   // ensures /api prefix always exists
+  withCredentials: true
 });
 
 // attach token automatically
 API.interceptors.request.use((req) => {
   const token = localStorage.getItem("token");
-  if (token) req.headers.Authorization = `Bearer ${token}`;
+  if (token) {
+    req.headers.Authorization = `Bearer ${token}`;
+  }
   return req;
 });
 
