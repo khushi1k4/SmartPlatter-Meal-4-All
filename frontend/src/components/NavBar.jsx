@@ -3,12 +3,22 @@ import React, { useState } from "react";
 import { Menu, X, ChevronDown, Globe } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
+  const navigate = useNavigate();
 
   const { language, setLanguage, t } = useLanguage();
+  const { user, logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();          // clear context
+    localStorage.removeItem("token"); // safety
+    navigate("/login"); // ⭐ redirect to login
+  };
 
   const changeLanguage = (lang) => {
     setLanguage(lang);
@@ -20,6 +30,7 @@ const Navbar = () => {
     { name: "Bill Scanner", path: "/scanner" },
     { name: "NutriScan", path: "/nutri-scan" },
     { name: "NutriCalculator", path: "/nutri-calculator" },
+    { name: "Report Analysis", path: "/report-analysis" },
   ];
 
   const languages = [
@@ -91,6 +102,22 @@ const Navbar = () => {
             </div>
           )}
           </div> */}
+
+          {user ? (
+          <button
+            onClick={handleLogout}
+            className="ml-4 bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm"
+          >
+            Logout
+          </button>
+          ) : (
+          <NavLink
+            to="/login"
+            className="ml-4 bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-sm"
+          >
+            Login
+          </NavLink>
+          )}
 
           {/* Tagline */}
           <span className="ml-4 text-xs font-medium text-orange-600 font-bold whitespace-nowrap italic"

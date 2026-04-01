@@ -81,18 +81,18 @@ const NutriCalculator = () => {
 
       {/* 🔥 HEADING */}
       <div className="text-center mb-10">
-        <h1 className="text-3xl md:text-4xl font-bold text-black">
+        <h1 className="text-2xl md:text-3xl font-bold text-black">
           NutriCalculator
         </h1>
-        <p className="text-[#6B4F3B] mt-2 max-w-2xl mx-auto">
+        <p className="text-sm text-[#6B4F3B] mt-1 max-w-xl mx-auto">
           It helps to calculate the nutrients intake in individual's diet on daily basis as per their customizations
         </p>
       </div>
 
       {/* 🌿 FORM */}
-      <div className="max-w-4xl mx-auto bg-white/90 backdrop-blur-md border border-green-100 rounded-3xl p-6 md:p-10 shadow-xl">
+      <div className="max-w-2xl mx-auto bg-white/90 backdrop-blur-md border border-green-100 rounded-3xl p-5 md:p-7 shadow-xl">
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
           {/* AGE */}
           <div>
@@ -173,9 +173,14 @@ const NutriCalculator = () => {
         </div>
 
         {/* BUTTON */}
-        <button
-          onClick={calculate}
-          className="w-full mt-8 bg-gradient-to-r from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 text-white py-3 rounded-2xl font-semibold shadow-lg transition duration-300"
+        <button 
+          onClick={calculate} // Ensure the function is called on click
+          disabled={!form.age || !form.height || !form.weight} // Disable if any field is empty
+          className={`w-full mt-6 py-2.5 rounded-xl text-sm font-semibold shadow-lg transition duration-300 
+            ${(!form.age || !form.height || !form.weight) 
+            ? "bg-gray-300 cursor-not-allowed text-gray-500" 
+            : "bg-gradient-to-r from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 text-white"
+            }`}
         >
           Calculate Nutrients
         </button>

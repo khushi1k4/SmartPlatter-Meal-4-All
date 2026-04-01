@@ -283,3 +283,50 @@ Dish: ${dishName}
     throw new Error("Failed to analyze nutrition.");
   }
 };
+
+// export const analyzeMealsWithGemini = async (meals, portion) => {
+//   try {
+//     const model = genAI.getGenerativeModel({
+//       model: "gemini-2.5-flash",
+//     });
+
+//     const prompt = `
+// Analyze meals with portion sizes.
+
+// Breakfast: ${meals.breakfast} (${portion.breakfast})
+// Snacks: ${meals.snacks} (${portion.snacks})
+// Lunch: ${meals.lunch} (${portion.lunch})
+// Dinner: ${meals.dinner} (${portion.dinner})
+
+// Return ONLY valid JSON:
+// {
+//   "calories": number,
+//   "protein": number,
+//   "carbs": number,
+//   "fats": number,
+//   "status": "Healthy | Moderate | Unhealthy",
+//   "insights": ["short insights"]
+// }
+// `;
+
+//     const result = await model.generateContent(prompt);
+//     const response = await result.response;
+//     let text = response.text();
+
+//     // 🧹 Clean markdown if present
+//     text = text.replace(/```json|```/g, "").trim();
+
+//     // 🧠 Extract JSON safely
+//     const jsonMatch = text.match(/\{[\s\S]*\}/);
+//     if (!jsonMatch) {
+//       console.error("Meal Analysis Response:", text);
+//       throw new Error("No valid JSON found");
+//     }
+
+//     return JSON.parse(jsonMatch[0]);
+
+//   } catch (error) {
+//     console.error("Error analyzing meals:", error);
+//     return null;
+//   }
+// };

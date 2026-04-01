@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+.inputPremium {
+  @apply w-full px-4 py-3 rounded-2xl border border-green-200 bg-white 
+  shadow-sm text-black placeholder-[#9C7B5E]
+  focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-green-400
+  transition duration-200;
+}
+
+.labelTop {
+  @apply text-sm font-semibold text-[#6B4F3B] mb-1 block;
+}
+
+.error {
+  @apply text-xs text-red-500 mt-1;
+}
+
+.resultCard {
+  @apply bg-white rounded-2xl p-4 shadow-md border border-green-100 text-center hover:shadow-lg transition;
+}
+
+.label {
+  @apply text-sm text-[#6B4F3B];
+}
+
+.value {
+  @apply text-lg font-bold text-black text-slate-800;
+}
+
+.inputPremium {
+  @apply w-[92%] md:w-[90%] px-3 py-2 text-sm rounded-xl 
+  border border-green-200 bg-white/80 
+  focus:outline-none focus:ring-2 focus:ring-green-400;
+}
+
+.card {
+  @apply bg-white rounded-2xl p-4 shadow-md border border-green-100 text-center;
+}
+
+.authInput {
+  @apply w-full 
+  px-3 
+  py-1.5 sm:py-2      /* ↓ reduced height */
+  text-xs sm:text-sm  /* responsive text */
+  rounded-lg
+  bg-[#1a1a1a]
+  border border-[#3b2f2f]
+  text-white
+  bg-slate-800
+  focus:outline-none focus:ring-2 focus:ring-green-600;
+}

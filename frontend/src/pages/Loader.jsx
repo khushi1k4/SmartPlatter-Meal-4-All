@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 const name = "SmartPlatter: Meal-4-All";
 
-function Loader({ onFinish }) {
+function Loader({ onFinish = () => {} }) {
   const [progress, setProgress] = useState(0);
   const [visible, setVisible] = useState(true);
 
