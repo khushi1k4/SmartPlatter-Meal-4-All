@@ -9,8 +9,6 @@
 <br/>
 An AI-powered meal planning ecosystem that transforms everyday cooking into a smart, nutritious, and cost-aware experience.
 
- #### 🚀 Live Demo 👉 [View Deployed App](https://smartplatter-meal4all.netlify.app/)
-
 ## 🧠 The Problems
 
 “What can I cook with the ingredients I already have?”
