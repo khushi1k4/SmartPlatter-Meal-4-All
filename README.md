@@ -7,13 +7,15 @@
 > **• Nutrition Analysis** 
 </div>
 <br/>
-An intelligent, multilingual AI-powered meal planning ecosystem that transforms everyday cooking into a smart, nutritious, and cost-aware experience.
+An AI-powered meal planning ecosystem that transforms everyday cooking into a smart, nutritious, and cost-aware experience.
 
  #### 🚀 Live Demo 👉 [View Deployed App](https://smartplatter-meal4all.netlify.app/)
 
 ## 🧠 The Problems
 
 “What can I cook with the ingredients I already have?”
+
+In a world where people struggle with maintaining balanced diets and interpreting nutrition data, SmartPlatter AI simplifies decision-making by turning everyday grocery data into personalized, AI-curated meal plans—bridging the gap between food availability and nutritional awareness.
 
 Millions struggle daily with:
 
@@ -22,6 +24,7 @@ Millions struggle daily with:
 - Poor nutrition tracking
 - Lack of regional & dietary personalization
 - Confusion about calorie and nutrient intake
+- Lack of knowledge about the nutrition requirements
 
 "Meal-4-All solves this intelligently using AI."
 
@@ -32,7 +35,7 @@ Millions struggle daily with:
 | 🥘 SmartPlatter         | Generate meals from available ingredients     |
 | 🧾 Grocery Bill Scanner | Scan receipts → Detect items → Suggest dishes |
 | 🥗 NutriScan            | Calculate calories, macros & health insights  |
-| 🌍 Multilingual UI      | Accessible across regions & languages         |
+| 🥗 NutriCalculator      | Calculate cal, carbs, fat, etc for different body types|
 | 💰 Cost Awareness       | Estimated meal cost for better budgeting      |
 | 🔁 Regeneration Engine  | Generate until user satisfaction              |
 
@@ -91,13 +94,16 @@ It Calculates:
 - Fiber
 And provides: Healthy improvement tips
 
+### 4️⃣ NutriCalculator — Personalized nutrition calculations
+- Height, weight, age, gender, and activity level of the individual help to determine the nutrient values required for their body.
+
 ## 🌍 Multilingual Interface
 
 - To ensure inclusivity across regions, the platform uses:
 - Context-based language switching
 - JavaScript translation object files
 - Dynamic UI rendering based on selected language
-This makes Meal-4-All accessible to a wider demographic across different Indian regions.
+This makes Meal-4-All accessible to a wider demographic across different regions of India.
 
 ---
 
