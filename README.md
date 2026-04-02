@@ -14,11 +14,9 @@ It bridges the gap between food availability, budgeting, and nutritional awarene
 
 Maintaining a balanced diet is difficult because people struggle with:
 
-- Understanding nutrition data
 - Planning meals from available ingredients
 - Managing grocery budgets
 - Food waste
-- Unplanned grocery spending
 - Poor nutrition tracking daily intake
 - Lack of regional & dietary personalization
 - Confusion about calorie and nutrient intake
