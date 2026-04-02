@@ -135,7 +135,6 @@ Meal history storage
 - Express.js
 - MongoDB
 
----
 ## 🧠 Engineering & Architecture
 
 This project emphasizes:
@@ -152,7 +151,6 @@ This project emphasizes:
 
 ✅ Error handling for production readiness
 
----
 ## 🧪 Challenges & Learnings
 
 ### 🔁 API Rate Limiting (429 Errors)
@@ -196,12 +194,15 @@ npm install
 npm run dev
 ```
 
----
 ## 🔮 Future Improvements
-Mobile app version
-Wearable health integration
-AI voice assistant for cooking
-Social meal sharing
+
+- Mobile app version
+
+- Wearable health integration
+
+- AI voice assistant for cooking
+
+- Social meal sharing
 
 ---
 <div align="center">
